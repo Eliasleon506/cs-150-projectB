@@ -46,6 +46,10 @@ app.layout = dbc.Container(
         dbc.Row( html.H1(
                         "Farms vs. Forest: South America",
                         style={"textAlign": "center"}),),
+                html.H3("Explore how agriculture land and Forest areas have changed over time in South America"
+                        ,
+                        style={"textAlign": "center"}
+                        ),
         dbc.Row([
             dbc.Col(
                     dcc.Graph(id="my-choropleth", figure={}),
@@ -152,13 +156,17 @@ app.layout = dbc.Container(
 
 def update_map(selected_year, data, clickData):
     df_selected = datasets[data]
+    if str(data) == "Forest Land":
+        color = "Greens"
+    else:
+        color = "oranges"
     fig_map = px.choropleth(
         df_selected,
         locations= "Country Code",
         color = selected_year,
         scope="south america",
         hover_name = "Country Name",
-        color_continuous_scale="Greens"
+        color_continuous_scale= color,
     )
     ## Chat_GPT helped make the line graph changed based on click
     # If a country is clicked, show line chart
@@ -191,7 +199,6 @@ def update_map(selected_year, data, clickData):
 
 
     else:
-        # Default line chart when no country is clicked
         fig_line = px.line(pd.DataFrame({'Year': [], 'Agricultural Land': [], 'Forest Land': []}),
                            x='Year', y=['Agricultural Land', 'Forest Land'],
                            title="Select a Country to See the Data")
