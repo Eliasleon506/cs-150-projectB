@@ -134,6 +134,9 @@ app.layout = dbc.Container(
             dbc.Col(dcc.Graph(id="my-bar-graph", figure={})
             ),
             ]
+        ),
+        dbc.Row(
+            html.A('Lear how to help!!', href = 'https://www.globalforestgeneration.org', target = '_blank', style = {'fontSize':'40px',"textAlign": "center"})
         )
     ]
 )
